@@ -284,51 +284,44 @@ showgallery(galleryarray);
 // create function to show card
 
 
-function showgallery(curarra){
-   document.getElementById("card").innerText = "";
-   for(var i=0;i<curarra.length;i++){
-       document.getElementById("card").innerHTML += `
+function showgallery(curarra) {
+    document.getElementById("card").innerText = "";
+    for (var i = 0; i < curarra.length; i++) {
+        document.getElementById("card").innerHTML += `
         <div class="col-md-4 mt-3" >
            <div class="card p-3 ps-5 pe-5">
                <h4 class="text-capitalize text-center">${curarra[i].title}</h4>
-
-          <img src="${curarra[i].image}" width="100%" height="320px"/>
-          <p class="mt-2">RM${curarra[i].price}</p>
-          <button class="btn btn-primary w-100 mx-auto">More</button>
-       
-          </div>
-          </div>
-       `
-   }
-
+               <img src="${curarra[i].image}" width="100%" height="320px"/>
+               <p class="mt-2">RM${curarra[i].price}</p>
+               <button class="btn btn-primary w-100 mx-auto">More</button>
+           </div>
+        </div>
+       `;
+    }
 }
 
 // For Live Searching Product
 
-document.getElementById("myinput").addEventListener("keyup",function(){
-    let text = document.getElementById("myinput").value;
+document.getElementById("myinput").addEventListener("keyup", function () {
+    let text = document.getElementById("myinput").value.toLowerCase(); // Convert search text to lowercase
 
-    filterarray= galleryarray.filter(function(a){
-        if(a.title.includes(text)){
+    filterarray = galleryarray.filter(function (a) {
+        if (a.title.toLowerCase().includes(text)) { // Convert item titles to lowercase and then check for inclusion
             return a.title;
-           }
+        }
+    });
 
-   });
-   if(this.value==""){
-       showgallery(galleryarray);
-   }
-   else{
-       if(filterarray == ""){
-           document.getElementById("para").style.display = 'block'
-           document.getElementById("card").innerHTML = ""; 
-       }
-       else{
-
-           showgallery(filterarray);
-           document.getElementById("para").style.display = 'none'
-       }
-   }
-
+    if (text === "") {
+        showgallery(galleryarray);
+    } else {
+        if (filterarray.length === 0) {
+            document.getElementById("para").style.display = 'block';
+            document.getElementById("card").innerHTML = "";
+        } else {
+            showgallery(filterarray);
+            document.getElementById("para").style.display = 'none';
+        }
+    }
 });
 
 
